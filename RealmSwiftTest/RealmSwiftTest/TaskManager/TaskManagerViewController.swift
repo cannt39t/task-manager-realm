@@ -27,13 +27,13 @@ class TaskManagerViewController: UITableViewController {
         presenter!.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func beginAppearanceTransition(_ isAppearing: Bool, animated: Bool) {
+        super.beginAppearanceTransition(isAppearing, animated: animated)
         observeTasks()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func endAppearanceTransition() {
+        super.endAppearanceTransition()
         invalidateObservation()
     }
     
@@ -49,9 +49,18 @@ class TaskManagerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = tasks?[indexPath.row].title
-        return cell
+        switch indexPath.section {
+            case 0:
+                let tempTasks = tasks!.filter{ !$0.isCompleted }
+                let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
+                cell.setupCellWith(task: tempTasks[indexPath.row])
+                return cell
+            default:
+                let tempTasks = tasks!.filter{ $0.isCompleted }
+                let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier, for: indexPath) as! TaskTableViewCell
+                cell.setupCellWith(task: tempTasks[indexPath.row])
+                return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -64,7 +73,8 @@ class TaskManagerViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { [unowned self] action, view, completion in
-            presenter?.deleteTask(task: tasks![indexPath.row])
+            let cell = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
+            presenter!.deleteTask(task: cell.task)
             tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
         }
@@ -76,15 +86,25 @@ class TaskManagerViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let done = UIContextualAction(style: .normal, title: "Done") { [unowned self] action, view, completion in
-            presenter?.updateTask(task: tasks![indexPath.row])
-            tableView.deleteRows(at: [indexPath], with: .right)
+            let cell = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
+            presenter!.changeStatusFor(task: cell.task)
+            tableView.deleteRows(at: [indexPath], with: .left)
             completion(true)
         }
         
-        done.image = UIImage(systemName: "checkmark")
-        done.backgroundColor = .systemGreen
+        if indexPath.section == 0 {
+            done.image = UIImage(systemName: "checkmark")
+            done.backgroundColor = .systemGreen
+        } else {
+            done.image = UIImage(systemName: "xmark")
+            done.backgroundColor = .systemGray
+        }
         
         return UISwipeActionsConfiguration(actions: [done])
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        50
     }
 }
 
@@ -100,7 +120,7 @@ private extension TaskManagerViewController {
     private func tableViewSetup() {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.frame = view.bounds
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.identifier)
     }
     
     @objc private func addTask() {

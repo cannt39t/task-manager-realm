@@ -20,6 +20,7 @@
 		05ACFFA32A375E3900DBC647 /* TaskManagerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ACFF9E2A375E3900DBC647 /* TaskManagerRouter.swift */; };
 		05ACFFA42A375E3900DBC647 /* TaskManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ACFF9F2A375E3900DBC647 /* TaskManagerViewController.swift */; };
 		05ACFFA52A375E3900DBC647 /* TaskManagerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05ACFFA02A375E3900DBC647 /* TaskManagerInteractor.swift */; };
+		05CEEDCC2A3903EB002367BD /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CEEDCB2A3903EB002367BD /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		05ACFF9E2A375E3900DBC647 /* TaskManagerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerRouter.swift; sourceTree = "<group>"; };
 		05ACFF9F2A375E3900DBC647 /* TaskManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerViewController.swift; sourceTree = "<group>"; };
 		05ACFFA02A375E3900DBC647 /* TaskManagerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerInteractor.swift; sourceTree = "<group>"; };
+		05CEEDCB2A3903EB002367BD /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				05ACFF9B2A375E1900DBC647 /* TaskManager */,
 				05ACFF982A37503400DBC647 /* Service */,
 				05ACFF952A374F3800DBC647 /* Model */,
+				05CEEDCA2A3903CA002367BD /* View */,
 				05ACFF7C2A37491100DBC647 /* AppDelegate.swift */,
 				05ACFF7E2A37491100DBC647 /* SceneDelegate.swift */,
 				05ACFF852A37491200DBC647 /* Assets.xcassets */,
@@ -108,6 +111,14 @@
 				05ACFFA02A375E3900DBC647 /* TaskManagerInteractor.swift */,
 			);
 			path = TaskManager;
+			sourceTree = "<group>";
+		};
+		05CEEDCA2A3903CA002367BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				05CEEDCB2A3903EB002367BD /* TaskTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +200,7 @@
 			files = (
 				05ACFF9A2A37503F00DBC647 /* TaskService.swift in Sources */,
 				05ACFFA52A375E3900DBC647 /* TaskManagerInteractor.swift in Sources */,
+				05CEEDCC2A3903EB002367BD /* TaskTableViewCell.swift in Sources */,
 				05ACFFA32A375E3900DBC647 /* TaskManagerRouter.swift in Sources */,
 				05ACFFA22A375E3900DBC647 /* TaskManagerPresenter.swift in Sources */,
 				05ACFF972A374F4500DBC647 /* Task.swift in Sources */,

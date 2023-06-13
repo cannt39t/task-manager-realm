@@ -13,6 +13,7 @@ protocol TaskManagerPresenterProtocol: AnyObject {
     func tasksFetched(_ tasks: Results<Task>)
     func addTask()
     func deleteTask(task: Task)
+    func changeStatusFor(task: Task)
 }
 
 class TaskManagerPresenter {
@@ -43,5 +44,9 @@ extension TaskManagerPresenter: TaskManagerPresenterProtocol {
     
     func deleteTask(task: Task) {
         interactor.deleteTask(task: task)
+    }
+    
+    func changeStatusFor(task: Task) {
+        interactor.toggleTaskStatus(task: task)
     }
 }

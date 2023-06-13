@@ -12,6 +12,7 @@ protocol TaskManagerInteractorProtocol: AnyObject {
     func getTasks()
     func addTask()
     func deleteTask(task: Task)
+    func toggleTaskStatus(task: Task)
 }
 
 class TaskManagerInteractor: TaskManagerInteractorProtocol {
@@ -30,5 +31,9 @@ class TaskManagerInteractor: TaskManagerInteractorProtocol {
     
     func deleteTask(task: Task) {
         taskService.deleteTask(task: task)
+    }
+    
+    func toggleTaskStatus(task: Task) {
+        taskService.updateTask(task: task, title: task.title, isCompleted: !task.isCompleted)
     }
 }
